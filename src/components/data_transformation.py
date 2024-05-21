@@ -28,11 +28,11 @@ class DataTransformation:
 
         try:
             numerical_columns=['writing_score','reading_score']
-            categorical_columns=["gender",'race_ethnicity','parental_level_of _education',
+            categorical_columns=["gender",'race_ethnicity','parental_level_of_education',
                                  'lunch','test_preparation_course']
             num_pipeline=Pipeline(
                 steps=[
-                    ("Imputer",SimpleImputer(strategy="median")),
+                    ("imputer",SimpleImputer(strategy="median")),
                     ("scaler",StandardScaler())
                 ]
             )
@@ -40,7 +40,7 @@ class DataTransformation:
                 steps=[
                     ("imputer",SimpleImputer(strategy="most_frequent")),
                     ("one_hot_encoder",OneHotEncoder()),
-                    ("scaler",StandardScaler())
+                    ("scaler",StandardScaler(with_mean=False))
                 ]
             )
 
@@ -84,13 +84,10 @@ class DataTransformation:
             )
 
             input_feature_train_arr=preprocessor_obj.fit_transform(input_features_train_df)
-            input_feature_test_arr=preprocessor_obj.fit_transform(input_features_test_df)
+            input_feature_test_arr=preprocessor_obj.transform(input_features_test_df)
             
-            train_arr=np.c_[
-                input_feature_train_arr,np.array(target_features_train_df)
-            ]
-
-            test_arr=np.c[input_feature_test_arr,np.array(target_features_test_df)]
+            train_arr=np.c_[input_feature_train_arr,np.array(target_features_train_df)]
+            test_arr=np.c_[input_feature_test_arr,np.array(target_features_test_df)]
 
             logging.info(f"saved preprocessing object.")
 
@@ -106,4 +103,4 @@ class DataTransformation:
 
             )
         except Exception as e:
-            CustomException(e,sys)
+            raise CustomException(e,sys)
