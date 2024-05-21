@@ -1,8 +1,12 @@
 import sys
-import logging
+# import logging
+from logger import logging   ##-->we use this to use logging for this exception errors
+
 ## this error exception is common for entire code
 ## using try, catch-raise custom exception |error message here is given
-## error is error i provide
+## error is error i provide- can customize
+
+
 def error_message_detail(error,error_detail:sys):
     _,_,exc_tb=error_detail.exc_info()
     file_name=exc_tb.tb_frame.f_code.co_filename
@@ -19,11 +23,11 @@ class CustomException(Exception):
     def __str__(self):## exception here it will be printed
         return self.error_message
     
-# if __name__=="__main__":
-#     try:
-#         a=1/0
-#     except Exception as e:
-#         logging.info("Divide by Zero")
-#         raise CustomException(e,sys)
+if __name__=="__main__":
+    try:
+        a=1/0
+    except Exception as e:
+        logging.info("Divide by Zero Error")
+        raise CustomException(e,sys)
     
 
