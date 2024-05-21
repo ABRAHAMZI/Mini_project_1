@@ -1,13 +1,15 @@
 import os
 import sys
-
-from src.exception import CustomException
-from src.logger import logging
+# from components.exception1 import CustomException
+from exception1 import CustomException
+# from components.logger1 import logging
+from logger1 import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-
+from data_transformation import DataTransformation
+from data_transformation import DataTransformationConfig
 
 
 @dataclass  ##decorator- to define class variable directly
@@ -27,7 +29,7 @@ class DataIngestion:
             df=pd.read_csv("notebook\data\stud.csv")
             logging.info('Read the dataset as dataframe')
 
-            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exitst_ok=True)
+            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
             df.to_csv(self.ingestion_config.raw_data_path,index=False,header=True)
 
             logging.info("Train test split initiated")
@@ -35,7 +37,7 @@ class DataIngestion:
 
             train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)          
 
-            train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
+            test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
 
             logging.info("Ingestion of the data is completed")
 

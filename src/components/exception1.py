@@ -1,6 +1,6 @@
 import sys
 # import logging
-from logger import logging   ##-->we use this to use logging for this exception errors
+from logger1 import logging   ##-->we use this to use logging for this exception errors
 
 ## this error exception is common for entire code
 ## using try, catch-raise custom exception |error message here is given
